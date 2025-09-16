@@ -65,4 +65,4 @@ layer = {
     'ID':'BusStopLocation'
 }
 
-get_all_data_param(geospatial_uri, layer, r'C:\Users\1stbe\Documents\YNC\SRP - Year 2\ ' + 'busstoplocationlink.csv')
+get_all_data_param(geospatial_uri, layer, r'C:\Users\Documents\' + 'busstoplocationlink.csv')
