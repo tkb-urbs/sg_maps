@@ -1,3 +1,5 @@
+# This code is adapted from one found on GitHub: https://github.com/blossomt/lta-datamall/blob/main/get_bus_tables.py
+
 import os                  #library allowing interactions with operating system
 from requests import get   #library for get data from APIs
 from csv import DictWriter #library for handling csv files
