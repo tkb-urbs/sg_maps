@@ -1,10 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Sep 16 10:21:54 2025
+
+@author: tkbean
+"""
+
 # This code is adapted from one found on GitHub: https://github.com/blossomt/lta-datamall/blob/main/get_bus_tables.py
 
 import os                  #library allowing interactions with operating system
 from requests import get   #library for get data from APIs
 from csv import DictWriter #library for handling csv files
 
-key = #PUT IN YOUR LTA KEY HERE
+key = 'insert your own key from LTA here'
 headers = {'AccountKey': key,
           'accept':'application/json'}
 
@@ -39,32 +46,19 @@ def get_all_data_param(base_uri, parameters, output_file):
     print("Total rows: " + str(n))
 
 # uris of desired datasets
-bus_stop_vol_uri = "http://datamall2.mytransport.sg/ltaodataservice/PV/Bus"
-bus_origin_destination_uri = "http://datamall2.mytransport.sg/ltaodataservice/PV/ODBus"
+bus_stop_vol_uri = "https://datamall2.mytransport.sg/ltaodataservice/PV/Bus"
+bus_origin_destination_uri = "https://datamall2.mytransport.sg/ltaodataservice/PV/ODBus"
+train_stn_vol_uri = "https://datamall2.mytransport.sg/ltaodataservice/PV/Train"
+train_origin_destination_uri = "https://datamall2.mytransport.sg/ltaodataservice/PV/ODTrain"
 
 # set the desired date to April 2022. Follow the format below.
 # it is formatted as a Python dictionary due to the arguments the 'get' function takes
-date_parameter = {
-    'Date':'202204'
-}
+dates = [{'Date':'202506'}, {'Date':'202507'}, {'Date':'202508'} ]
+directory = r"insert your own directory here"
 
-directory = #insert desired file directory here (or add it directly to the function)
-
-get_all_data_param(bus_stop_vol_uri, date_parameter, directory + 'bus_stop_vol.csv')
-get_all_data_param(bus_origin_destination_uri, date_parameter , directory + 'bus_origin_destination.csv')
-get_all_data_param(train_origin_destination_uri, date_parameter , directory + 'train_origin_destination.csv')
-get_all_data_param(train_stn_vol_uri, date_parameter, directory + 'train_stn_vol.csv')
-
-
-train_stn_vol_uri = "http://datamall2.mytransport.sg/ltaodataservice/PV/Train"
-train_origin_destination_uri = "http://datamall2.mytransport.sg/ltaodataservice/PV/ODTrain"
-
-geospatial_uri = "http://datamall2.mytransport.sg/ltaodataservice/GeospatialWholeIsland"
-
-# To change the shape layer you want to extract, assign something else to 'ID'
-# See LTA's DataMall guide for full list of available files
-layer = {
-    'ID':'BusStopLocation'
-}
-
-get_all_data_param(geospatial_uri, layer, r'C:\Users\Documents\' + 'busstoplocationlink.csv')
+for date_parameter in dates:
+    
+    get_all_data_param(bus_stop_vol_uri, date_parameter, directory + 'bus_stop_vol_' + str(date_parameter["Date"]) + '.csv')
+    get_all_data_param(bus_origin_destination_uri, date_parameter , directory + 'bus_origin_destination_' + str(date_parameter["Date"]) + '.csv')
+    get_all_data_param(train_origin_destination_uri, date_parameter , directory + 'train_origin_destination_' + str(date_parameter["Date"]) + '.csv')
+    get_all_data_param(train_stn_vol_uri, date_parameter, directory + 'train_stn_vol_' + str(date_parameter["Date"]) + '.csv')
